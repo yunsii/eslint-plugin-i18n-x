@@ -1,9 +1,26 @@
-import hello from './rules/hello'
+import { rules } from './rules/index.js'
 
-import type { ESLint } from 'eslint'
+const { name, version }
+  // `import`ing here would bypass the TSConfig's `"rootDir": "src"`
+  // eslint-disable-next-line ts/no-require-imports
+  = require('../package.json') as typeof import('../package.json')
 
-export default {
-  rules: {
-    [hello.name]: hello.module,
+const plugin = {
+  configs: {
+    get recommended() {
+      // eslint-disable-next-line ts/no-use-before-define
+      return recommended
+    },
   },
-} satisfies ESLint.Plugin
+  meta: { name, version },
+  rules,
+}
+
+const recommended = {
+  plugins: {
+    'eslint-plugin-i18n-x': plugin,
+  },
+  rules,
+}
+
+export default plugin
